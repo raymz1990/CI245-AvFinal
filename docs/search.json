@@ -1,0 +1,192 @@
+[
+  {
+    "objectID": "content/index.html",
+    "href": "content/index.html",
+    "title": "Pré Tratamento dos dados",
+    "section": "",
+    "text": "Carregamento dos dados\nA seguir, serão carregados 100.000 de linhas do arquivo:\n# Carregar as primeiras 100.000 linhas\nfile_path &lt;- \"./data/311_Service_Requests_from_2010_to_Present_20240703.csv\"\ndata &lt;- read.csv(file_path, nrows = 100000)\n\n# Visualizar os dados\nhead(data)",
+    "crumbs": [
+      "Pré Tratamento dos dados"
+    ]
+  },
+  {
+    "objectID": "content/index.html#definindo-novas-tabelas",
+    "href": "content/index.html#definindo-novas-tabelas",
+    "title": "Pré Tratamento dos dados",
+    "section": "Definindo novas tabelas",
+    "text": "Definindo novas tabelas\nO segundo passo é a criação de novas tabelas que ajudam a reduzir os tamanhos dos arquivos e permmitem uma melhor visualização das informações.\nForam definidas a criação de 4 novas tabelas:\n\nIncident - contém informações de incidentes ocorridos;\nLocation - contém informações referente a localização das ocorrências;\nResolution - contém informações referente a resolucação destas ocorrências;\nAgency - contém os nomes das agências.\n\n\n# Definir as novas tabelas\n# Tabela 1: Incident\nincident &lt;- data.frame(\n  Unique_Key = data$Unique.Key,\n  Created_Date = data$Created.Date,\n  Closed_Date = data$Closed.Date,\n  Agency = data$Agency,\n  Complaint_Type = data$Complaint.Type,\n  Descriptor = data$Descriptor,\n  Status = data$Status,\n  Due_Date = data$Due.Date\n)\n\n# Tabela 2: Location\nlocation &lt;- data.frame(\n  Unique_Key = data$Unique.Key,\n  Location_Type = data$Location.Type,\n  Incident_Zip = data$Incident.Zip,\n  Incident_Address = data$Incident.Address,\n  Street_Name = data$Street.Name,\n  Cross_Street_1 = data$Cross.Street.1,\n  Cross_Street_2 = data$Cross.Street.2,\n  Intersection_Street_1 = data$Intersection.Street.1,\n  Intersection_Street_2 = data$Intersection.Street.2,\n  Address_Type = data$Address.Type,\n  City = data$City,\n  Facility_Type = data$Facility.Type,\n  Borough = data$Borough\n)\n\n# Tabela 3: Resolution\nresolution &lt;- data.frame(\n  Unique_Key = data$Unique.Key,\n  Resolution_Description = data$Resolution.Description,\n  Resolution_Action_Updated_Date = data$Resolution.Action.Updated.Date,\n  Community_Board = data$Community.Board,\n  BBL = data$BBL,\n  X_Coordinate = data$X.Coordinate..State.Plane.,\n  Y_Coordinate = data$Y.Coordinate..State.Plane.,\n  Open_Data_Channel_Type = data$Open.Data.Channel.Type\n)\n\n# Tabela 4: Agency\nagency &lt;- data.frame(\n  Unique_Key = data$Unique.Key,\n  Agency = data$Agency,\n  Agency_Name = data$Agency.Name\n)\n\n# # Eliminar duplicados na tabela Agency\n# agency &lt;- unique(agency)\n\n# Verificar as tabelas criadas\nhead(incident)\nhead(location)\nhead(resolution)\nhead(agency)",
+    "crumbs": [
+      "Pré Tratamento dos dados"
+    ]
+  },
+  {
+    "objectID": "content/index.html#salvar-as-tabelas-em-novos-arquivos",
+    "href": "content/index.html#salvar-as-tabelas-em-novos-arquivos",
+    "title": "Pré Tratamento dos dados",
+    "section": "Salvar as tabelas em novos arquivos",
+    "text": "Salvar as tabelas em novos arquivos\nPor fim, serão criados novos arquivos .csv apartir das tabelas que foram criadas, que serão a base da análise utilizando o SQL.\n\n\nCode\n# Salvar as novas tabelas como CSV para importação posterior no SQL\nwrite.csv(incident,   \"./files/incident.csv\",   row.names = FALSE)\nwrite.csv(location,   \"./files/location.csv\",   row.names = FALSE)\nwrite.csv(resolution, \"./files/resolution.csv\", row.names = FALSE)\nwrite.csv(agency,     \"./files/agency.csv\",     row.names = FALSE)",
+    "crumbs": [
+      "Pré Tratamento dos dados"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Análise de Dados de Incidentes Utilizando SQL",
+    "section": "",
+    "text": "Trabalho Avaliativo\nCI345 - SQL para Ciências de Dados Departamento de Estatística - UFPR Professora: Simone Dominico Aluno: GRR20233881 - Raymundo Eduardo Pilz",
+    "crumbs": [
+      "Trabalho Avaliativo"
+    ]
+  },
+  {
+    "objectID": "index.html#descrição-análise-de-dados-de-incidentes-utilizando-sql-mapeamento-pré-processamento-e-análise.",
+    "href": "index.html#descrição-análise-de-dados-de-incidentes-utilizando-sql-mapeamento-pré-processamento-e-análise.",
+    "title": "Análise de Dados de Incidentes Utilizando SQL",
+    "section": "Descrição: Análise de Dados de Incidentes Utilizando SQL: Mapeamento, Pré-processamento e Análise.",
+    "text": "Descrição: Análise de Dados de Incidentes Utilizando SQL: Mapeamento, Pré-processamento e Análise.",
+    "crumbs": [
+      "Trabalho Avaliativo"
+    ]
+  },
+  {
+    "objectID": "index.html#objetivo",
+    "href": "index.html#objetivo",
+    "title": "Análise de Dados de Incidentes Utilizando SQL",
+    "section": "Objetivo:",
+    "text": "Objetivo:\nVocês foram contratados para prestar uma consultoria de análise de dados. A base de dados representa os incidentes reportados pelo número 311 que atende emergencias nos EUA. A análise envolve o mapeamento dos dados para um modelo relacional, pré-processamento utilizando SQL e a aplicação de técnicas de análise de dados para extrair insights significativos (incluindo tabelas temporárias, views e subconsultas).",
+    "crumbs": [
+      "Trabalho Avaliativo"
+    ]
+  },
+  {
+    "objectID": "index.html#características-da-base-de-dados",
+    "href": "index.html#características-da-base-de-dados",
+    "title": "Análise de Dados de Incidentes Utilizando SQL",
+    "section": "Características da base de dados",
+    "text": "Características da base de dados\nO conjunto de dados utilizado possui informações de incidentes reportados, com diversos atributos como Data de Criação, Data de Fechamento, Agência, Tipo de Reclamação, Localização, entre outros. Atualmente os dados estão em um CSV disponíveis no link Clique para download. O conjunto de dados em CSV possui 19,7 GB de dados, então o carregamento pode demorar consideravelmente. Os campos devem ser analisados e utilizados para montar uma base de dados relacional, criando tabelas conforme necessário (dica: são 4 tabelas). Após a criação do modelo é necessário carregar os dados e criar um roteiro de pré-processamento, limpeza (se necessário) e análise dos dados, utilizando conceitos como tabelas temporárias, subconsultas, e operações SQL tratadas durante as aulas.",
+    "crumbs": [
+      "Trabalho Avaliativo"
+    ]
+  },
+  {
+    "objectID": "index.html#atividades-principais",
+    "href": "index.html#atividades-principais",
+    "title": "Análise de Dados de Incidentes Utilizando SQL",
+    "section": "Atividades Principais:",
+    "text": "Atividades Principais:\n\nCriação do Modelo:\n\nCriação do Esquema SQL.\n\n\n\nTabelas temporárias:\n\nIdentificar incidentes que foram reportados mais de uma vez em um curto período de tempo (por exemplo, na mesma semana).\nCalcular a duração média dos incidentes para cada tipo de reclamação.\n\n\n\nPré-processamento:\n\nNormalização de Nomes de Agências.\nAlguns registros têm o campo “city” vazio, e você precisa preenchê-los com base no incident_zip.\n\n\n\nAnálise dos dados:\n\nCálculo do número de incidentes por tipo - análise descritiva.\nDetecção de outliers na duração dos incidentes, usando como base, tudo o que estiver fora do intervalo de 30 dias.\nAnálise da relação entre tipos de reclamação e resolução.\n\n\n\nViews e subconsultas:\n\nCriar uma view que retorne todos os incidentes que estão em aberto.\nCriar uma view que mostre a contagem de incidentes por bairro.\n\n\n\nEncontrar os 10 incidentes com o maior atraso entre a data de criação e a data de fechamento.\n\nIdentificar endereços onde ocorreram mais de 5 reclamações diferentes",
+    "crumbs": [
+      "Trabalho Avaliativo"
+    ]
+  },
+  {
+    "objectID": "content/index.html#salvando-as-tabelas-em-novos-arquivos",
+    "href": "content/index.html#salvando-as-tabelas-em-novos-arquivos",
+    "title": "Pré Tratamento dos dados",
+    "section": "Salvando as tabelas em novos arquivos",
+    "text": "Salvando as tabelas em novos arquivos\nPor fim, serão criados novos arquivos .csv apartir das tabelas que foram criadas, que serão a base da análise utilizando o SQL.\n\n# Salvar as novas tabelas como CSV para importação posterior no SQL\nwrite.csv(incident,   \"./files/incident.csv\",   row.names = FALSE)\nwrite.csv(location,   \"./files/location.csv\",   row.names = FALSE)\nwrite.csv(resolution, \"./files/resolution.csv\", row.names = FALSE)\nwrite.csv(agency,     \"./files/agency.csv\",     row.names = FALSE)",
+    "crumbs": [
+      "Pré Tratamento dos dados"
+    ]
+  },
+  {
+    "objectID": "content/Parte01/index.html",
+    "href": "content/Parte01/index.html",
+    "title": "1  Criação do Modelo",
+    "section": "",
+    "text": "1.1 Criação das Tabelas\nNo SGBD (Sistema de Gerenciamento de Banco de Dados) são criadas as tabelas com os campos definidos, assim como as chaves primárias e estrangeiras para refletir o modelo relacional.\n-- Criação da Tabela: Incident\nCREATE TABLE Incident (\n    Unique_Key INT PRIMARY KEY,\n    Created_Date DATETIME,\n    Closed_Date DATETIME,\n    Agency VARCHAR(50),\n    Complaint_Type VARCHAR(255),\n    Descriptor VARCHAR(255),\n    Status VARCHAR(50),\n    Due_Date DATETIME\n);\n\n-- Criação da Tabela: Location\nCREATE TABLE Location (\n    Unique_Key INT PRIMARY KEY,\n    Location_Type VARCHAR(255),\n    Incident_Zip VARCHAR(10),\n    Incident_Address VARCHAR(255),\n    Street_Name VARCHAR(255),\n    Cross_Street_1 VARCHAR(255),\n    Cross_Street_2 VARCHAR(255),\n    Intersection_Street_1 VARCHAR(255),\n    Intersection_Street_2 VARCHAR(255),\n    Address_Type VARCHAR(50),\n    City VARCHAR(255),\n    Facility_Type VARCHAR(255),\n    Borough VARCHAR(50),\n    FOREIGN KEY (Unique_Key) REFERENCES Incident(Unique_Key)\n);\n\n-- Criação da Tabela: Resolution\nCREATE TABLE Resolution (\n    Unique_Key INT PRIMARY KEY,\n    Resolution_Description TEXT,\n    Resolution_Action_Updated_Date DATETIME,\n    Community_Board VARCHAR(50),\n    BBL VARCHAR(50),\n    Open_Data_Channel_Type VARCHAR(50),\n    FOREIGN KEY (Unique_Key) REFERENCES Incident(Unique_Key)\n);\n\n-- Criação da Tabela: Agency\nCREATE TABLE Agency (\n    Unique_Key INT PRIMARY KEY,\n    Agency VARCHAR(50),\n    Agency_Name VARCHAR(255),\n    FOREIGN KEY (Unique_Key) REFERENCES Incident(Unique_Key)\n);\nAbaixo reprodução das tabelas criadas dentro do SBDG:\nFigure 1.1: Criação do Modelo no MySQL.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Criação do Modelo</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte01/index.html#criação-das-tabelas",
+    "href": "content/Parte01/index.html#criação-das-tabelas",
+    "title": "1  Criação do Modelo",
+    "section": "",
+    "text": "1.1.1 Tabela Incident\nVerificando os dados da tabela Incident, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 1.2: Amostra tabela Incident\n\n\n\n\n\n\n\n1.1.2 Tabela Location\nVerificando os dados da tabela Location, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 1.3: Amostra tabela Location\n\n\n\n\n\n\n\n1.1.3 Tabela Resolution\nVerificando os dados da tabela Resolution, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 1.4: Amostra tabela Resolution\n\n\n\n\n\n\n\n1.1.4 Tabela Agency\nVerificando os dados da tabela Agency, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 1.5: Amostra tabela Agency",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Criação do Modelo</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte02/index.html",
+    "href": "content/Parte02/index.html",
+    "title": "2  Tabelas Temporárias",
+    "section": "",
+    "text": "2.1 Criação das Tabelas Temporárias",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Tabelas Temporárias</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte02/index.html#tabela-temporária-para-incidentes-abertos",
+    "href": "content/Parte02/index.html#tabela-temporária-para-incidentes-abertos",
+    "title": "2  Tabelas Temporárias",
+    "section": "2.2 Tabela Temporária para Incidentes Abertos",
+    "text": "2.2 Tabela Temporária para Incidentes Abertos\nPrimeiramente, será criada uma tabela temporária para armazenar os incidentes que ainda estão abertos (sem data de fechamento).\n\nCREATE TEMPORARY TABLE Temp_Open_Incidents AS\nSELECT *\nFROM Incident\nWHERE Closed_Date IS NULL;\n\nAbaixo reprodução das tabelas criadas dentro do SBDG:\n\n\n\n\n\n\n\n\nFigure 2.1: Criação do Modelo no MySQL.\n\n\n\n\n\n\n2.2.1 Tabela Incident\nVerificando os dados da tabela Incident, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 2.2: Amostra tabela Incident\n\n\n\n\n\n\n\n2.2.2 Tabela Location\nVerificando os dados da tabela Location, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 2.3: Amostra tabela Location\n\n\n\n\n\n\n\n2.2.3 Tabela Resolution\nVerificando os dados da tabela Resolution, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 2.4: Amostra tabela Resolution\n\n\n\n\n\n\n\n2.2.4 Tabela Agency\nVerificando os dados da tabela Agency, se foram importados corretamente:\n\n\n\n\n\n\n\n\nFigure 2.5: Amostra tabela Agency",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Tabelas Temporárias</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte02/index.html#criação-das-tabelas-temporárias",
+    "href": "content/Parte02/index.html#criação-das-tabelas-temporárias",
+    "title": "2  Tabelas Temporárias",
+    "section": "",
+    "text": "2.1.1 Tabela Temporária para Incidentes Abertos\nPrimeiramente, será criada uma tabela temporária para armazenar os incidentes que ainda estão abertos (sem data de fechamento).\n\nCREATE TEMPORARY TABLE Temp_Open_Incidents AS\nSELECT *\nFROM Incident\nWHERE Closed_Date IS NULL;\n\n\n\n2.1.2 Tabela Temporária para Incidentes Fechados\nApós será criada outra tabela temporária para armazenar incidentes fechados em um período específico, incidentes fechados em 2017.\n\nCREATE TEMPORARY TABLE Temp_Closed_Incidents_2017 AS\nSELECT *\nFROM Incident\nWHERE Closed_Date BETWEEN '2017-01-01 00:00:00' AND '2017-12-31 23:59:59';",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Tabelas Temporárias</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte02/index.html#análise-utilizando-tabelas-temporárias",
+    "href": "content/Parte02/index.html#análise-utilizando-tabelas-temporárias",
+    "title": "2  Tabelas Temporárias",
+    "section": "2.2 Análise Utilizando Tabelas Temporárias",
+    "text": "2.2 Análise Utilizando Tabelas Temporárias\n\n2.2.1 Contagem de Incidentes Abertos\nVamos contar o número de incidentes que estão abertos.\n\nSELECT COUNT(*) AS Open_Incidents\nFROM Temp_Open_Incidents;\n\n\n\n\n\n\n\n\n\nFigure 2.1: Incidentes em Aberto.\n\n\n\n\n\nA consulta aponta 2.210 incidentes em aberto.\n\n\n2.2.2 Contagem de Incidentes Fechados em 2017\n\n-- Incidentes Fechados em 2017\nSELECT COUNT(*) AS Closed_Incidents_2017\nFROM Temp_Closed_Incidents_2017;SELECT COUNT(*) AS Open_Incidents\nFROM Temp_Open_Incidents;\n\n\n\n\n\n\n\n\n\nFigure 2.2: Incidentes Fechados em 2017.\n\n\n\n\n\nA consulta aponta 96.049 incidentes ocorridos em 2017.\n\n\n2.2.3 Reclamações Mais Comuns em 2017\n\n-- Reclamações Mais Comuns em 2017\nSELECT Complaint_Type, COUNT(*) AS Count\nFROM Temp_Closed_Incidents_2017\nGROUP BY Complaint_Type\nORDER BY Count DESC\nLIMIT 10;\n\n\n\n\n\n\n\n\n\nFigure 2.3: Reclamações Mais Comuns em 2017.\n\n\n\n\n\n\n\n2.2.4 Tempo Médio de Resolução dos Incidentes Fechados em 2017\n\n-- Tempo Médio de Resolução dos Incidentes Fechados em 2017\nSELECT AVG(julianday(Closed_Date) - julianday(Created_Date)) AS Avg_Resolution_Time_Days\nFROM Temp_Closed_Incidents_2017;\n\n\n\n\n\n\n\n\n\nFigure 2.4: Tempo Médio de Resolução dos Incidentes Fechados em 2017.\n\n\n\n\n\nAssim o tempo médio de resolução dos incidentes em 2017 é de 6 dias.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Tabelas Temporárias</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte03/index.html",
+    "href": "content/Parte03/index.html",
+    "title": "3  Pré-Processamento",
+    "section": "",
+    "text": "3.1 Normalização de Nomes de Agências",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Pré-Processamento</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte03/index.html#normalização-de-nomes-de-agências",
+    "href": "content/Parte03/index.html#normalização-de-nomes-de-agências",
+    "title": "3  Pré-Processamento",
+    "section": "",
+    "text": "3.1.1 Criação da Tabela de Referência para Nomes de Agências\nSerá criada uma tabela de referência com as agências e seus nomes normalizados.\n\n-- Criar tabela de referência para nomes de agências\nCREATE TABLE Agency_Reference (\n    Agency TEXT PRIMARY KEY,\n    Normalized_Agency_Name TEXT\n);\n\n-- Inserir dados \nINSERT INTO Agency_Reference (Agency, Normalized_Agency_Name) VALUES\n('NYPD', 'New York City Police Department'),\n('DOT', 'Department of Transportation'),\n('DOE', 'Department of Education'),\n('DOHMH', 'Department of Health and Mental Hygiene'),\n('DHS', 'Department of Homeless Services'),\n('DOB', 'Department of Buildings'),\n('DSNY', 'Department of Sanitation'),\n('DPR', 'Department of Parks and Recreation'),\n('DCWP', 'Department of Consumer and Worker Protection'),\n('DFTA', 'HealthCare Connections'),\n('EDC', 'Economic Development Corporatio'),\n('TLC', 'Taxi and Limousine Commission'),\n('DOF', 'Department Office'),\n('DEP', 'Department of Environmental Protection'),\n('ACS', 'ACS'),\n('HPD', 'Department of Housing Preservation and Development'),\n('HRA', 'HRA Benefit Card Replacement'),\n('NYCEM', 'NYC Emergency Management'),\n('DOITT', 'Department of Information Technology and Telecommunications'),\n('TAX', 'TAX'),\n('DCP', 'DCP');",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Pré-Processamento</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte03/index.html#preenchimento-do-campo-city-com-base-no-incident_zip",
+    "href": "content/Parte03/index.html#preenchimento-do-campo-city-com-base-no-incident_zip",
+    "title": "3  Pré-Processamento",
+    "section": "3.2 Preenchimento do Campo City com Base no Incident_Zip",
+    "text": "3.2 Preenchimento do Campo City com Base no Incident_Zip\n\n3.2.1 Criação da Tabela de Mapeamento para Incident_Zip e City\nSerá criada uma tabela de mapeamento para incident_zip e city usando valores únicos da tabela Location.\n\n-- Criar tabela de mapeamento para incident_zip e city a partir da tabela Location\nCREATE TABLE Zip_City_Map AS\nSELECT DISTINCT Incident_Zip, City\nFROM Location\nWHERE City IS NOT NULL;",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Pré-Processamento</span>"
+    ]
+  },
+  {
+    "objectID": "content/Parte03/index.html#resultados-das-atualizações",
+    "href": "content/Parte03/index.html#resultados-das-atualizações",
+    "title": "3  Pré-Processamento",
+    "section": "3.3 Resultados das Atualizações",
+    "text": "3.3 Resultados das Atualizações\n\n3.3.1 Visualização dos Nomes de Agências Normalizados\n\n-- Verificar os dados\nSELECT * FROM Agency_Reference LIMIT 10;\n\n\n\n\n\n\n\n\n\nFigure 3.1: Nomes de Agências Normalizados.\n\n\n\n\n\n\n\n3.3.2 Visualização dos Campos City Preenchidos\n\nSELECT Incident_Zip, City\nFROM Zip_City_Map\nGROUP BY Incident_Zip, City\nORDER BY Incident_Zip;\n\n\n\n\n\n\n\n\n\nFigure 3.2: Campos City Preenchidos com Base no Incident_Zip.\n\n\n\n\n\nAssim, os nomes das agências foram normalizados e os campos city foram preenchidos corretamente com base nos códigos incident_zip.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Pré-Processamento</span>"
+    ]
+  }
+]
